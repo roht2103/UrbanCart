@@ -1,9 +1,11 @@
-import "./App.css";
+import Nav from "./components/Nav"; // Adjust the path if needed
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return;
+  return (
+    <div>
+      <Nav />
+    </div>
+  );
 }
 
 export default App;
