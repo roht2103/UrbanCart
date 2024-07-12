@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gray-800 text-white py-8 mt-10 float-end">
+    <footer className="w-full bg-gray-800 text-white py-8 mt-10">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h3 className="text-lg font-semibold mb-3">Company Information</h3>

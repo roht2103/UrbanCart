@@ -151,7 +151,7 @@ const Nav = () => {
           </section>
         </Popover>
         <span
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/account/cart")}
           className="flex items-center justify-center gap-1 cursor-pointer mt-2 md:mt-0"
         >
           <IoIosCart style={{ color: "white", fontSize: "30px" }} />

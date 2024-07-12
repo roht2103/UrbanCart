@@ -3,7 +3,10 @@ import address from "../assets/address.png";
 import orders from "../assets/orders.png";
 import wishlist from "../assets/wishlist.png";
 import Footer from "../components/Footer";
+import { Link, useNavigate } from "react-router-dom";
+
 const AccountPage = () => {
+  const Navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-2 md:p-4 w-full lg:w-4/6 md:w-5/6">
@@ -12,7 +15,10 @@ const AccountPage = () => {
           name="container"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2"
         >
-          <section className="flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100">
+          <section
+            onClick={() => Navigate("/account/profile")}
+            className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
+          >
             <span>
               <img
                 className="h-16 min-w-16 rounded-full"
@@ -25,7 +31,10 @@ const AccountPage = () => {
               <p>Manage your account details.</p>
             </span>
           </section>
-          <section className="flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100">
+          <section
+            onClick={() => Navigate("/account/orders")}
+            className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
+          >
             <span>
               <img className="h-16 min-w-16 rounded-full" src={orders} alt="" />
             </span>
@@ -36,7 +45,10 @@ const AccountPage = () => {
               </p>
             </span>
           </section>
-          <section className="flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100">
+          <section
+            onClick={() => Navigate("/account/wishlist")}
+            className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
+          >
             <span>
               <img
                 className="h-16 min-w-16 rounded-full"
@@ -49,7 +61,10 @@ const AccountPage = () => {
               <p>View and manage your wishlist.</p>
             </span>
           </section>
-          <section className="flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100">
+          <section
+            onClick={() => Navigate("/account/address")}
+            className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
+          >
             <span>
               <img
                 className="h-16 min-w-16 rounded-full"
@@ -62,7 +77,10 @@ const AccountPage = () => {
               <p>Edit, remove or set default address.</p>
             </span>
           </section>
-          <section className="flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100">
+          <section
+            onClick={() => Navigate("/account/cart")}
+            className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
+          >
             <span>
               <img
                 className="h-16 min-w-16 rounded-full"
