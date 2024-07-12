@@ -101,60 +101,80 @@ const Nav = () => {
   );
 
   return (
-    <div className="p-3 font-bold h-15 bg-black flex items-center justify-between flex-wrap">
-      <Link to="/">
-        <img className="h-12 cursor-pointer" src={logo} alt="" />
-      </Link>
-      <section className="flex items-center mt-2 md:mt-0">
-        <span>
-          <FaLocationDot style={{ color: "white", fontSize: "15px" }} />
-        </span>
-        <span
-          className="text-white cursor-pointer ml-1"
-          onClick={() => navigate("/account/address")}
-        >
-          <p className="text-xs font-light">Delivering to</p>
-          <p className="text-sm">Update Address</p>
-        </span>
-      </section>
-      <form className="flex w-full md:w-3/5 mt-2 md:mt-0" onSubmit={searchItem}>
-        <input
-          className="h-10 p-3 rounded-l-md w-full outline-none font-medium"
-          type="text"
-          name="search"
-          placeholder="Search UrbanCart"
-        />
-        <label
-          htmlFor="search"
-          className="bg-[#FFBD59] flex items-center justify-center h-10 w-10 rounded-r-md cursor-pointer"
-        >
-          <IoSearch style={{ fontSize: "30px" }} />
-        </label>
-        <input className="hidden" type="submit" id="search" />
-      </form>
-      <Popover content={content} trigger="hover">
-        <section
-          onClick={(e) => {
-            e.preventDefault();
-            !isAuthenticated && loginWithRedirect();
-          }}
-          className="text-white cursor-pointer gap-0 mt-2 md:mt-0"
-        >
-          <p className="text-xs font-light">
-            Hello, {!isAuthenticated ? "sign in" : user.name}
-          </p>
-          <p className="text-sm">Account & Lists</p>
+    <div>
+      <div className="p-3 font-bold h-15 bg-black flex items-center justify-between flex-wrap">
+        <Link to="/">
+          <img className="h-12 cursor-pointer" src={logo} alt="" />
+        </Link>
+        <section className="flex items-center mt-2 md:mt-0">
+          <span>
+            <FaLocationDot style={{ color: "white", fontSize: "15px" }} />
+          </span>
+          <span
+            className="text-white cursor-pointer ml-1"
+            onClick={() => navigate("/account/address")}
+          >
+            <p className="text-xs font-light">Delivering to</p>
+            <p className="text-sm">Update Address</p>
+          </span>
         </section>
-      </Popover>
-      <span
-        onClick={() => navigate("/cart")}
-        className="flex items-center justify-center gap-1 cursor-pointer mt-2 md:mt-0"
-      >
-        <IoIosCart style={{ color: "white", fontSize: "30px" }} />
-        <label className="text-white text-xl font-light cursor-pointer">
-          {cartCount}
-        </label>
-      </span>
+        <form
+          className="flex w-full md:w-3/5 mt-2 md:mt-0"
+          onSubmit={searchItem}
+        >
+          <input
+            className="h-10 p-3 rounded-l-md w-full outline-none font-medium"
+            type="text"
+            name="search"
+            placeholder="Search UrbanCart"
+          />
+          <label
+            htmlFor="search"
+            className="bg-[#FFBD59] flex items-center justify-center h-10 w-10 rounded-r-md cursor-pointer"
+          >
+            <IoSearch style={{ fontSize: "30px" }} />
+          </label>
+          <input className="hidden" type="submit" id="search" />
+        </form>
+        <Popover content={content} trigger="hover">
+          <section
+            onClick={(e) => {
+              e.preventDefault();
+              !isAuthenticated && loginWithRedirect();
+            }}
+            className="text-white cursor-pointer gap-0 mt-2 md:mt-0"
+          >
+            <p className="text-xs font-light">
+              Hello, {!isAuthenticated ? "sign in" : user.name}
+            </p>
+            <p className="text-sm">Account & Lists</p>
+          </section>
+        </Popover>
+        <span
+          onClick={() => navigate("/cart")}
+          className="flex items-center justify-center gap-1 cursor-pointer mt-2 md:mt-0"
+        >
+          <IoIosCart style={{ color: "white", fontSize: "30px" }} />
+          <label className="text-white text-xl font-light cursor-pointer">
+            {cartCount}
+          </label>
+        </span>
+      </div>
+      <div className="font-bold h-15 bg-zinc-700 flex items-center text-white font-light flex-wrap">
+        <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
+          All
+        </p>
+
+        <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
+          Mens
+        </p>
+        <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
+          Womens
+        </p>
+        <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
+          Childrens
+        </p>
+      </div>
     </div>
   );
 };

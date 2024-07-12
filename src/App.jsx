@@ -6,6 +6,7 @@ import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import AddressPage from "./pages/AddressPage";
 import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 function App() {
   return (
     <div>
@@ -14,7 +15,7 @@ function App() {
           <Route
             path="/*"
             element={
-              <>
+              <div className="">
                 <Nav />
                 <Routes>
                   <Route path="/" element={<HomePage />} />
@@ -23,8 +24,9 @@ function App() {
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/account/wishlist" element={<WishlistPage />} />
                   <Route path="/account/address" element={<AddressPage />} />
+                  <Route path="/account/profile" element={<ProfilePage />} />
                 </Routes>
-              </>
+              </div>
             }
           />
         </Routes>
