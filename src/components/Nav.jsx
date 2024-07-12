@@ -2,18 +2,46 @@ import logo from "../assets/urbancart.jpg";
 import { IoSearch } from "react-icons/io5";
 import { IoIosCart } from "react-icons/io";
 import { FaLocationDot } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Popover } from "antd";
 
 const Nav = () => {
   const [cartCount, setCartCount] = useState(0);
   const { loginWithRedirect, logout } = useAuth0();
   const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const searchItem = () => {
+  const navigate = useNavigate();
+  const searchItem = (event) => {
+    event.preventDefault();
     alert("searched");
   };
+
+  const postUser = async (userData) => {
+    try {
+      const response = await axios.post("http://localhost:1000/user", userData);
+      console.log("User data posted successfully", response.data);
+    } catch (error) {
+      console.error("There was an error posting the user data!", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const userData = {
+        name: user.name,
+        email: user.email,
+        img: user.picture,
+        cartItems: [],
+        wishlist: [],
+        orders: [],
+        addresses: [],
+        address: "",
+      };
+      postUser(userData);
+    }
+  }, [isAuthenticated, user]);
 
   const content = (
     <div>
@@ -30,15 +58,36 @@ const Nav = () => {
           </button>
         </section>
       )}
-      <section className="w-60 p-2">
+      <section className="w-60 p-2 flex flex-col">
         <hr />
         <h1 className="font-bold font-2xl">Your Account</h1>
-        <h5 className="cursor-pointer hover:text-red-600 hover:underline">
+        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
           Account
-        </h5>
-        <h5 className="cursor-pointer hover:text-red-600 hover:underline">
+        </h5> */}
+        <Link
+          to="/account"
+          className="cursor-pointer hover:text-red-600 hover:underline"
+        >
+          Account
+        </Link>
+        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
           Orders
-        </h5>
+        </h5> */}
+        <Link
+          to="/account/orders"
+          className="cursor-pointer hover:text-red-600 hover:underline"
+        >
+          Orders
+        </Link>
+        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
+          Wishlist
+        </h5> */}
+        <Link
+          to="/account/wishlist"
+          className="cursor-pointer hover:text-red-600 hover:underline"
+        >
+          Wishlist
+        </Link>
         {isAuthenticated && (
           <h5
             className="cursor-pointer hover:text-red-600 hover:underline"
@@ -53,12 +102,17 @@ const Nav = () => {
 
   return (
     <div className="p-3 font-bold h-15 bg-black flex items-center justify-between flex-wrap">
-      <img className="h-12 cursor-pointer" src={logo} alt="" />
+      <Link to="/">
+        <img className="h-12 cursor-pointer" src={logo} alt="" />
+      </Link>
       <section className="flex items-center mt-2 md:mt-0">
         <span>
           <FaLocationDot style={{ color: "white", fontSize: "15px" }} />
         </span>
-        <span className="text-white cursor-pointer ml-1">
+        <span
+          className="text-white cursor-pointer ml-1"
+          onClick={() => navigate("/account/address")}
+        >
           <p className="text-xs font-light">Delivering to</p>
           <p className="text-sm">Update Address</p>
         </span>
