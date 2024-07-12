@@ -49,15 +49,15 @@ const Nav = () => {
     </div>
   );
   return (
-    <div className="p-3 font-bold h-20 bg-black flex items-center justify-between">
-      <img className="h-16 cursor-pointer" src={logo} alt="" />
-      <section className="flex items-center">
+    <div className="p-3 font-bold h-15 bg-black flex items-center justify-between">
+      <img className="h-12 cursor-pointer" src={logo} alt="" />
+      <section className="flex items-end">
         <span>
           <FaLocationDot style={{ color: "white", fontSize: "15px" }} />
         </span>
         <span className="text-white cursor-pointer">
           <p className="text-xs font-light">Delivering to</p>
-          <p>Update Address</p>
+          <p className="text-sm">Update Address</p>
         </span>
       </section>
       <form className="flex w-3/5" onSubmit={() => searchItem()}>
@@ -82,17 +82,17 @@ const Nav = () => {
             e.preventDefault();
             !isAuthenticated && loginWithRedirect();
           }}
-          className="text-white cursor-pointer"
+          className="text-white cursor-pointer gap-0"
         >
-          <p className="text-xs">
+          <p className="text-xs font-light">
             Hello, {!isAuthenticated ? "sign in" : user.name}
           </p>
-          <p className="text-lg">Account & Lists</p>
+          <p className="text-sm">Account & Lists</p>
         </section>
       </Popover>
       <span className="flex items-center justify-center gap-1 cursor-pointer">
-        <IoIosCart style={{ color: "white", fontSize: "40px" }} />
-        <label className="text-white text-2xl font-light cursor-pointer">
+        <IoIosCart style={{ color: "white", fontSize: "30px" }} />
+        <label className="text-white text-xl font-light cursor-pointer">
           {cartCount}
         </label>
       </span>
