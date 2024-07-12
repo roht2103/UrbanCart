@@ -8,8 +8,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Popover } from "antd";
 
-const Nav = () => {
-  const [cartCount, setCartCount] = useState(0);
+const Nav = (props) => {
+  // const [cartCount, setCartCount] = useState();
   const { loginWithRedirect, logout } = useAuth0();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
@@ -156,7 +156,7 @@ const Nav = () => {
         >
           <IoIosCart style={{ color: "white", fontSize: "30px" }} />
           <label className="text-white text-xl font-light cursor-pointer">
-            {cartCount}
+            {props.cartCount}
           </label>
         </span>
       </div>

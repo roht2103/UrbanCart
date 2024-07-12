@@ -37,4 +37,14 @@ router.post("/user", async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+  try {
+    const { email } = req.query;
+    const users = await schemas.Users.find({ email: email });
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+});
+
 module.exports = router;
