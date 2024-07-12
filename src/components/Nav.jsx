@@ -146,7 +146,10 @@ const Nav = () => {
           <p className="text-sm">Account & Lists</p>
         </section>
       </Popover>
-      <span className="flex items-center justify-center gap-1 cursor-pointer mt-2 md:mt-0">
+      <span
+        onClick={() => navigate("/cart")}
+        className="flex items-center justify-center gap-1 cursor-pointer mt-2 md:mt-0"
+      >
         <IoIosCart style={{ color: "white", fontSize: "30px" }} />
         <label className="text-white text-xl font-light cursor-pointer">
           {cartCount}

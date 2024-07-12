@@ -51,6 +51,7 @@ const productSchema = new Schema({
   id: { type: Number, required: true },
   name: { type: String, required: true },
   price: { type: String, required: true },
+  src: { type: String, required: true },
   category: { type: String, required: true },
   gender: { type: String, required: true },
   description: { type: String, required: true },

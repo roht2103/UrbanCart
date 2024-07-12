@@ -1,4 +1,8 @@
 const AccountPage = () => {
-  return <h1>Account</h1>;
+  return (
+    <div>
+      <h1>Account</h1>
+    </div>
+  );
 };
 export default AccountPage;
