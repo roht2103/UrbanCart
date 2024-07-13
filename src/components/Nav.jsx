@@ -9,10 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Popover } from "antd";
 
 const Nav = (props) => {
-  // const [cartCount, setCartCount] = useState();
   const { loginWithRedirect, logout } = useAuth0();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
+
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+
   const searchItem = (event) => {
     event.preventDefault();
     alert("searched");
@@ -28,19 +31,27 @@ const Nav = (props) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && user) {
-      const userData = {
-        name: user.name,
-        email: user.email,
-        img: user.picture,
-        cartItems: [],
-        wishlist: [],
-        orders: [],
-        addresses: [],
-        address: "",
-      };
-      postUser(userData);
-    }
+    const fetchUser = async () => {
+      if (isAuthenticated && user) {
+        const userData = {
+          name: user.name,
+          email: user.email,
+          img: user.picture,
+          cartItems: [],
+          wishlist: [],
+          orders: [],
+          addresses: [],
+          address: "",
+        };
+        postUser(userData);
+        setCurrentUser(userData);
+        setIsUserLoading(false);
+      } else {
+        setIsUserLoading(false);
+      }
+    };
+
+    fetchUser();
   }, [isAuthenticated, user]);
 
   const content = (
@@ -61,27 +72,18 @@ const Nav = (props) => {
       <section className="w-60 p-2 flex flex-col">
         <hr />
         <h1 className="font-bold font-2xl">Your Account</h1>
-        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
-          Account
-        </h5> */}
         <Link
           to="/account"
           className="cursor-pointer hover:text-red-600 hover:underline"
         >
           Account
         </Link>
-        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
-          Orders
-        </h5> */}
         <Link
           to="/account/orders"
           className="cursor-pointer hover:text-red-600 hover:underline"
         >
           Orders
         </Link>
-        {/* <h5 className="cursor-pointer hover:text-red-600 hover:underline">
-          Wishlist
-        </h5> */}
         <Link
           to="/account/wishlist"
           className="cursor-pointer hover:text-red-600 hover:underline"
@@ -104,7 +106,11 @@ const Nav = (props) => {
     <div>
       <div className="p-3 font-bold h-15 bg-black flex items-center justify-between flex-wrap">
         <Link to="/">
-          <img className="h-12 cursor-pointer" src={logo} alt="" />
+          <img
+            className="h-12 cursor-pointer"
+            src={logo}
+            alt="UrbanCart Logo"
+          />
         </Link>
         <section className="flex items-center mt-2 md:mt-0">
           <span>
@@ -145,7 +151,12 @@ const Nav = (props) => {
             className="text-white cursor-pointer gap-0 mt-2 md:mt-0"
           >
             <p className="text-xs font-light">
-              Hello, {isAuthenticated ? props.currentUser[0].name : "sign in"}
+              Hello,{" "}
+              {isUserLoading
+                ? "Loading..."
+                : isAuthenticated
+                ? currentUser?.name
+                : "sign in"}
             </p>
             <p className="text-sm">Account & Lists</p>
           </section>
@@ -164,7 +175,6 @@ const Nav = (props) => {
         <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
           All
         </p>
-
         <p className="px-3 pb-0.5 pt-0.5 border-2 border-transparent hover:border-white cursor-pointer">
           Mens
         </p>

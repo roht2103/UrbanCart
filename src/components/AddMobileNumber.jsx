@@ -2,10 +2,21 @@ import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 
-const AddMobileNumber = ({ setEditMobileWindow }) => {
+const AddMobileNumber = ({ setEditMobileWindow, email }) => {
   const [step, setStep] = useState(1);
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
+
+  const updateMobile = (mobile) => {
+    try {
+      const response = axios.put(
+        "http://localhost:1000/account/profile/add-mobile",
+        { email: email, mobile: mobile }
+      );
+    } catch (err) {
+      console.log("There was an error while adding mobile number", err);
+    }
+  };
 
   const sendOtp = async (e) => {
     e.preventDefault();
@@ -16,6 +27,7 @@ const AddMobileNumber = ({ setEditMobileWindow }) => {
   const verifyOtp = async (e) => {
     e.preventDefault();
     alert("otp verified.");
+    updateMobile(mobileNumber);
     setEditMobileWindow(false);
   };
 

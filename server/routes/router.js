@@ -11,11 +11,11 @@ router.post("/user", async (req, res) => {
     req.body;
   try {
     // Check if user already exists
-    const existingUser = await schemas.Users.findOne({ email: email });
+    // const existingUser = await schemas.Users.findOne({ email: email });
 
-    if (existingUser) {
-      return res.status(200).send("User already exists");
-    }
+    // if (existingUser) {
+    //   return res.status(200).send("User already exists");
+    // }
 
     // Create new user if not exists
     const newUser = new schemas.Users({
@@ -121,6 +121,33 @@ router.put("/account/profile/edit-name", async (req, res) => {
   } catch (error) {
     console.error("An error occurred while updating the user name:", error);
     res.status(500).send("An error occurred while updating the user name");
+  }
+});
+
+router.put("/account/profile/add-mobile", async (req, res) => {
+  const { email, mobile } = req.body; // count will be either +1 or -1
+
+  try {
+    console.log(
+      "Received request to update product quantity for email:",
+      email
+    );
+    console.log("email to update:", email, "mobile:", mobile);
+
+    const user = await schemas.Users.findOne({ email: email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).send("User not found");
+    }
+
+    user.mobile = mobile;
+
+    await user.save();
+    console.log("User mobile added successfully");
+    res.status(200).send(user);
+  } catch (error) {
+    console.error("An error occurred while updating the user mobile:", error);
+    res.status(500).send("An error occurred while updating the user mobiles");
   }
 });
 

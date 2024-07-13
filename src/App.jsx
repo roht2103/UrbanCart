@@ -106,7 +106,7 @@ function App() {
         `http://localhost:1000/user?email=${email}`
       );
       setCurrentUser(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }
@@ -125,42 +125,37 @@ function App() {
 
   return (
     <div>
-      {isAuthenticated && currentUser && currentUser.length > 0 && (
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/*"
-              element={
-                <div className="">
-                  <Nav
-                    currentUser={currentUser}
-                    cartCount={isAuthenticated ? cart.length : 0}
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <div className="">
+                <Nav
+                  currentUser={currentUser}
+                  cartCount={isAuthenticated ? cart.length : 0}
+                />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/account" element={<AccountPage />} />
+                  <Route path="/account/orders" element={<OrdersPage />} />
+                  <Route
+                    path="/account/cart"
+                    element={<CartPage cart={cart} />}
                   />
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/account" element={<AccountPage />} />
-                    <Route path="/account/orders" element={<OrdersPage />} />
-                    <Route
-                      path="/account/cart"
-                      element={<CartPage cart={cart} />}
-                    />
-                    <Route
-                      path="/account/wishlist"
-                      element={<WishlistPage />}
-                    />
-                    <Route path="/account/address" element={<AddressPage />} />
-                    <Route
-                      path="/account/profile"
-                      element={<ProfilePage currentUser={currentUser} />}
-                    />
-                    <Route path="/product" element={<ProductPage />} />
-                  </Routes>
-                </div>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      )}
+                  <Route path="/account/wishlist" element={<WishlistPage />} />
+                  <Route path="/account/address" element={<AddressPage />} />
+                  <Route
+                    path="/account/profile"
+                    element={<ProfilePage currentUser={currentUser} />}
+                  />
+                  <Route path="/product" element={<ProductPage />} />
+                </Routes>
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

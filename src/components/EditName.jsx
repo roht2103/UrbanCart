@@ -14,7 +14,7 @@ const EditName = ({ name, email, setEditNameWindow }) => {
         }
       );
     } catch (error) {
-      console.error("There was an error updating the product quantity!", error);
+      console.error("There was an error updating the user name!", error);
     }
     setEditNameWindow(false);
   };
