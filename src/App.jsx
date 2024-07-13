@@ -100,12 +100,13 @@ const cart = [
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [currentUser, setCurrentUser] = useState();
-  const fetchUsers = async (email) => {
+  const fetchUser = async (email) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/users?email=${email}`
+        `http://localhost:1000/user?email=${email}`
       );
       setCurrentUser(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }
@@ -136,7 +137,10 @@ function App() {
                   />
                   <Route path="/account/wishlist" element={<WishlistPage />} />
                   <Route path="/account/address" element={<AddressPage />} />
-                  <Route path="/account/profile" element={<ProfilePage />} />
+                  <Route
+                    path="/account/profile"
+                    element={<ProfilePage currentUser={currentUser} />}
+                  />
                   <Route path="/product" element={<ProductPage />} />
                 </Routes>
               </div>

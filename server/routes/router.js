@@ -37,11 +37,12 @@ router.post("/user", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+router.get("/user", async (req, res) => {
   try {
     const { email } = req.query;
-    const users = await schemas.Users.find({ email: email });
-    res.json(users);
+    const user = await schemas.Users.find({ email: email });
+    res.json(user);
+    console.log(res.json(user));
   } catch (error) {
     console.error("Error fetching users:", error);
   }

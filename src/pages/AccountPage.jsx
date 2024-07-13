@@ -4,9 +4,12 @@ import orders from "../assets/orders.png";
 import wishlist from "../assets/wishlist.png";
 import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AccountPage = () => {
   const Navigate = useNavigate();
+  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-2 md:p-4 w-full lg:w-4/6 md:w-5/6">
@@ -16,7 +19,11 @@ const AccountPage = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2"
         >
           <section
-            onClick={() => Navigate("/account/profile")}
+            onClick={() =>
+              isAuthenticated
+                ? Navigate("/account/profile")
+                : loginWithRedirect()
+            }
             className="cursor-pointer flex items-center gap-4 p-3 border-2 border-gray-200 rounded-lg hover:bg-gray-100"
           >
             <span>
