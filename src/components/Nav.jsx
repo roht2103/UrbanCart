@@ -145,7 +145,7 @@ const Nav = (props) => {
             className="text-white cursor-pointer gap-0 mt-2 md:mt-0"
           >
             <p className="text-xs font-light">
-              Hello, {!isAuthenticated ? "sign in" : user.name}
+              Hello, {isAuthenticated ? props.currentUser[0].name : "sign in"}
             </p>
             <p className="text-sm">Account & Lists</p>
           </section>

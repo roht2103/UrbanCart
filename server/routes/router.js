@@ -42,9 +42,10 @@ router.get("/user", async (req, res) => {
     const { email } = req.query;
     const user = await schemas.Users.find({ email: email });
     res.json(user);
-    console.log(res.json(user));
+    console.log(user); // This line just logs the user data, it does not resend the response
   } catch (error) {
     console.error("Error fetching users:", error);
+    res.status(500).send("There was an error fetching the user data!");
   }
 });
 

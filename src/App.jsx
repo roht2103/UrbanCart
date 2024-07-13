@@ -117,37 +117,50 @@ function App() {
       fetchUser(user.email);
     }
   }, [isAuthenticated, user]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     fetchUser(currentUser.email);
+  //   }
+  // }, [currentUser]);
 
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/*"
-            element={
-              <div className="">
-                <Nav cartCount={isAuthenticated ? cart.length : 0} />
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/account" element={<AccountPage />} />
-                  <Route path="/account/orders" element={<OrdersPage />} />
-                  <Route
-                    path="/account/cart"
-                    element={<CartPage cart={cart} />}
+      {isAuthenticated && currentUser && currentUser.length > 0 && (
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <div className="">
+                  <Nav
+                    currentUser={currentUser}
+                    cartCount={isAuthenticated ? cart.length : 0}
                   />
-                  <Route path="/account/wishlist" element={<WishlistPage />} />
-                  <Route path="/account/address" element={<AddressPage />} />
-                  <Route
-                    path="/account/profile"
-                    element={<ProfilePage currentUser={currentUser} />}
-                  />
-                  <Route path="/product" element={<ProductPage />} />
-                </Routes>
-              </div>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/account" element={<AccountPage />} />
+                    <Route path="/account/orders" element={<OrdersPage />} />
+                    <Route
+                      path="/account/cart"
+                      element={<CartPage cart={cart} />}
+                    />
+                    <Route
+                      path="/account/wishlist"
+                      element={<WishlistPage />}
+                    />
+                    <Route path="/account/address" element={<AddressPage />} />
+                    <Route
+                      path="/account/profile"
+                      element={<ProfilePage currentUser={currentUser} />}
+                    />
+                    <Route path="/product" element={<ProductPage />} />
+                  </Routes>
+                </div>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      )}
     </div>
   );
 }
