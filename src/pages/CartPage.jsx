@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const CartPage = ({ cart }) => {
   const [cartItems, setCartItems] = useState(cart);
   const [subtotal, setSubtotal] = useState(0);
@@ -16,6 +16,21 @@ const CartPage = ({ cart }) => {
     );
     setSubtotal(total);
   }, [cart]);
+
+  const updateQuantity = async (count) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:4000/account/cart/quantity",
+        {
+          email: user.email,
+          product: item,
+          count: count,
+        }
+      );
+    } catch (error) {
+      console.error("There was an error updating the product quantity!", error);
+    }
+  };
   return (
     <div>
       {isAuthenticated && cartItems.length === 0 ? (
@@ -62,9 +77,19 @@ const CartPage = ({ cart }) => {
                     </p>
                   </div>
                   <div className="text-xl">
-                    <button className="w-6 rounded bg-gray-200 m-1">-</button>
+                    <button
+                      onClick={() => updateQuantity(-1)}
+                      className="w-6 rounded bg-gray-200 m-1"
+                    >
+                      -
+                    </button>
                     <label className="w-6 m-1">{product.quantity}</label>
-                    <button className="w-6 rounded bg-gray-200 m-1">+</button>
+                    <button
+                      onClick={() => updateQuantity(1)}
+                      className="w-6 rounded bg-gray-200 m-1"
+                    >
+                      +
+                    </button>
                   </div>
                   <div className="flex items-center mt-4">
                     <p className="text-lg font-bold">{product.price} $</p>
