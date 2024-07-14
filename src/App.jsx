@@ -141,7 +141,7 @@ function App() {
                   <Route path="/account/orders" element={<OrdersPage />} />
                   <Route
                     path="/account/cart"
-                    element={<CartPage cart={cart} />}
+                    element={<CartPage currentUser={currentUser} cart={cart} />}
                   />
                   <Route path="/account/wishlist" element={<WishlistPage />} />
                   <Route path="/account/address" element={<AddressPage />} />

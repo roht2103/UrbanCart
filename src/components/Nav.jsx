@@ -21,37 +21,79 @@ const Nav = (props) => {
     alert("searched");
   };
 
+  // const postUser = async (userData) => {
+  //   try {
+  //     const response = await axios.post("http://localhost:1000/user", userData);
+  //     console.log("User data posted successfully", response.data);
+  //   } catch (error) {
+  //     console.error("There was an error posting the user data!", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     if (isAuthenticated && user) {
+  //       const userData = {
+  //         name: user.name,
+  //         email: user.email,
+  //         img: user.picture,
+  //         cartItems: [],
+  //         wishlist: [],
+  //         orders: [],
+  //         addresses: [],
+  //         address: "",
+  //       };
+  //       postUser(userData);
+  //       setCurrentUser(userData);
+  //       setIsUserLoading(false);
+  //     } else {
+  //       setIsUserLoading(false);
+  //     }
+  //   };
+
+  //   fetchUser();
+  // }, [isAuthenticated, user]);
+
+  const fetchUsers = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1000/user?email=${email}`
+      );
+      setCurrentUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error fetching the Users!", error);
+    }
+  };
+
   const postUser = async (userData) => {
     try {
-      const response = await axios.post("http://localhost:1000/user", userData);
-      console.log("User data posted successfully", response.data);
+      await axios.post("http://localhost:1000/user", userData);
     } catch (error) {
       console.error("There was an error posting the user data!", error);
     }
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (isAuthenticated && user) {
-        const userData = {
-          name: user.name,
-          email: user.email,
-          img: user.picture,
-          cartItems: [],
-          wishlist: [],
-          orders: [],
-          addresses: [],
-          address: "",
-        };
-        postUser(userData);
-        setCurrentUser(userData);
-        setIsUserLoading(false);
-      } else {
-        setIsUserLoading(false);
-      }
-    };
-
-    fetchUser();
+    isAuthenticated && fetchUsers(user.email);
+  }, []);
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const userData = {
+        name: user.name,
+        email: user.email,
+        img: user.picture,
+        cartItems: [],
+        wishlist: [],
+        orders: [],
+        addresses: [],
+        address: "",
+      };
+      postUser(userData);
+      setIsUserLoading(false);
+    } else {
+      setIsUserLoading(false);
+    }
   }, [isAuthenticated, user]);
 
   const content = (
@@ -151,11 +193,11 @@ const Nav = (props) => {
             className="text-white cursor-pointer gap-0 mt-2 md:mt-0"
           >
             <p className="text-xs font-light">
-              Hello,{" "}
-              {isUserLoading
+              Hello,
+              {isLoading
                 ? "Loading..."
                 : isAuthenticated
-                ? currentUser?.name
+                ? user.name
                 : "sign in"}
             </p>
             <p className="text-sm">Account & Lists</p>

@@ -6,16 +6,47 @@ router.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
+// router.post("/user", async (req, res) => {
+//   const { name, email, img, cartItems, wishlist, orders, addresses, address } =
+//     req.body;
+//   try {
+//     // Check if user already exists
+//     const existingUser = await schemas.Users.findOne({ email: email });
+
+//     if (existingUser) {
+//       return res.status(409).send("User already exists");
+//     }
+
+//     // Create new user if not exists
+//     const newUser = new schemas.Users({
+//       name,
+//       email,
+//       img,
+//       cartItems,
+//       wishlist,
+//       orders,
+//       addresses,
+//       address,
+//     });
+//     await newUser.save();
+
+//     res.status(201).send("User data posted successfully");
+//   } catch (error) {
+//     res.status(500).send("There was an error posting the user data!");
+//     console.log(error);
+//   }
+// });
+
 router.post("/user", async (req, res) => {
   const { name, email, img, cartItems, wishlist, orders, addresses, address } =
     req.body;
   try {
     // Check if user already exists
-    // const existingUser = await schemas.Users.findOne({ email: email });
+    const existingUser = await schemas.Users.findOne({ email: email });
 
-    // if (existingUser) {
-    //   return res.status(200).send("User already exists");
-    // }
+    if (existingUser) {
+      return res.status(200).send("User already exists");
+    }
 
     // Create new user if not exists
     const newUser = new schemas.Users({
@@ -33,7 +64,6 @@ router.post("/user", async (req, res) => {
     res.status(201).send("User data posted successfully");
   } catch (error) {
     res.status(500).send("There was an error posting the user data!");
-    console.log(error);
   }
 });
 
@@ -50,7 +80,7 @@ router.get("/user", async (req, res) => {
 });
 
 router.put("/account/cart/quantity", async (req, res) => {
-  const { email, product, count } = req.body; // count will be either +1 or -1
+  const { email, product, count } = req.body;
 
   try {
     console.log(
@@ -71,10 +101,8 @@ router.put("/account/cart/quantity", async (req, res) => {
 
     if (productIndex > -1) {
       console.log("Product found in cart, updating quantity");
-      // Update the product quantity
       user.cartItems[productIndex].quantity += count;
 
-      // Remove the product if quantity becomes 0
       if (user.cartItems[productIndex].quantity <= 0) {
         user.cartItems.splice(productIndex, 1);
       }
@@ -98,7 +126,7 @@ router.put("/account/cart/quantity", async (req, res) => {
 });
 
 router.put("/account/profile/edit-name", async (req, res) => {
-  const { email, name } = req.body; // count will be either +1 or -1
+  const { email, name } = req.body;
 
   try {
     console.log(
@@ -125,7 +153,7 @@ router.put("/account/profile/edit-name", async (req, res) => {
 });
 
 router.put("/account/profile/add-mobile", async (req, res) => {
-  const { email, mobile } = req.body; // count will be either +1 or -1
+  const { email, mobile } = req.body;
 
   try {
     console.log(
