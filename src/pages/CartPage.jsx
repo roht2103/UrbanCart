@@ -143,7 +143,6 @@ const CartPage = (props) => {
         promotional code? We'll prompt you to enter your claim code during
         checkout.
       </p>
-      <Footer />
     </div>
   );
 };

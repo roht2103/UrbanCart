@@ -8,6 +8,7 @@ import AddressPage from "./pages/AddressPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductPage";
+import Footer from "./components/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -57,14 +58,21 @@ function App() {
                     path="/account/cart"
                     element={<CartPage currentUser={currentUser} />}
                   />
-                  <Route path="/account/wishlist" element={<WishlistPage />} />
-                  <Route path="/account/address" element={<AddressPage />} />
+                  <Route
+                    path="/account/wishlist"
+                    element={<WishlistPage currentUser={currentUser} />}
+                  />
+                  <Route
+                    path="/account/address"
+                    element={<AddressPage currentUser={currentUser} />}
+                  />
                   <Route
                     path="/account/profile"
                     element={<ProfilePage currentUser={currentUser} />}
                   />
                   <Route path="/product" element={<ProductPage />} />
                 </Routes>
+                <Footer />
               </div>
             }
           />

@@ -102,7 +102,6 @@ const AccountPage = () => {
           </section>
         </section>
       </div>
-      <Footer />
     </div>
   );
 };

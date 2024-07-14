@@ -68,7 +68,6 @@ const ProfilePage = (props) => {
           </section>
         )}
       </div>
-      <Footer />
       {editNameWindow && (
         <EditName
           name={currentUser.name}
