@@ -17,7 +17,7 @@ const CartPage = (props) => {
   useEffect(() => {
     if (props.currentUser && props.currentUser.length > 0) {
       setCartItems(props.currentUser[0].cartItems);
-      console.log(props.currentUser);
+      // console.log(props.currentUser);
     }
   }, [props.currentUser]);
   // Calculate subtotal whenever cartItems change
