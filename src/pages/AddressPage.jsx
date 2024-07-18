@@ -40,6 +40,23 @@ const AddressPage = () => {
   useEffect(() => {
     isAuthenticated && fetchUsers(user.email);
   }, [isLoading]);
+
+  useEffect(() => {});
+
+  const removeAddress = async (email, address) => {
+    const data = { email: email, address: address };
+    try {
+      const res = await axios.delete(
+        "http://localhost:1000/account/addresses/remove-address",
+        { data }
+      );
+      alert("Address removed successfully!");
+      setAddresses(res.data);
+    } catch (error) {
+      console.error("There was an error removing address", error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-2 md:p-4 w-full lg:w-4/6 md:w-5/6">
@@ -74,9 +91,12 @@ const AddressPage = () => {
                     Edit
                   </Link>
                   <p className="border border-slate-800 h-5"></p>
-                  <Link className="text-blue-700" to="#">
+                  <p
+                    onClick={() => removeAddress(user.email, address)}
+                    className="text-blue-700 cursor-pointer"
+                  >
                     Remove
-                  </Link>
+                  </p>
                 </span>
               </section>
             ))}

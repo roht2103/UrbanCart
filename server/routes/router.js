@@ -73,7 +73,6 @@ router.get("/user", async (req, res) => {
     const { email } = req.query;
     const user = await schemas.Users.find({ email: email });
     res.json(user);
-    console.log(user); // This line just logs the user data, it does not resend the response
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).send("There was an error fetching the user data!");
@@ -203,6 +202,38 @@ router.put("/account/addresses/add-new-address", async (req, res) => {
   } catch (error) {
     console.error("An error occurred while adding the address:", error);
     res.status(500).send("An error occurred while adding the address");
+  }
+});
+
+router.delete("/account/addresses/remove-address", async (req, res) => {
+  const { email, address } = req.body;
+  try {
+    console.log("Received request to remove address for email:", email);
+    console.log("Address to remove:", address);
+
+    const user = await schemas.Users.findOne({ email: email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).send("User not found");
+    }
+
+    const addressIndex = user.addresses.findIndex((addr) => {
+      return addr._id.toString() === address._id;
+    });
+
+    if (addressIndex > -1) {
+      console.log("Address found in user, removing address");
+      user.addresses.splice(addressIndex, 1); // Remove the address from the addresses array
+      await user.save();
+      console.log("Address removed successfully");
+      res.send(user.addresses);
+    } else {
+      console.log("Address not found in user");
+      res.status(404).send("Address not found in user");
+    }
+  } catch (error) {
+    console.error("An error occurred while removing the address:", error);
+    res.status(500).send("An error occurred while removing the address");
   }
 });
 
