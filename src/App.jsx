@@ -8,6 +8,7 @@ import AddressPage from "./pages/AddressPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductPage";
+import AddAddress from "./pages/AddAddress";
 import Footer from "./components/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
@@ -69,6 +70,10 @@ function App() {
                   <Route
                     path="/account/profile"
                     element={<ProfilePage currentUser={currentUser} />}
+                  />
+                  <Route
+                    path="/account/addresses/add-new-address"
+                    element={<AddAddress currentUser={currentUser} />}
                   />
                   <Route path="/product" element={<ProductPage />} />
                 </Routes>

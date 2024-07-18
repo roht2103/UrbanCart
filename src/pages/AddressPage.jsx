@@ -19,7 +19,7 @@ const AddressPage = (props) => {
   const [currUser, setCurrUser] = useState();
   const [addresses, setAddresses] = useState([]);
   const { user, isAuthenticated, isLoading } = useAuth0();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (props.currentUser && props.currentUser.length > 0) {
       setCurrUser(props.currentUser[0]);
@@ -31,7 +31,10 @@ const AddressPage = (props) => {
       <div className="p-2 md:p-4 w-full lg:w-4/6 md:w-5/6">
         <h1 className="text-2xl md:text-3xl my-5">Your Addresses</h1>
         <div className="flex flex-wrap gap-4 mt-4 justify-center md:justify-start">
-          <section className="border-2 border-slate-300 border-dashed flex flex-col items-center justify-center w-80 md:h-80 py-3 rounded-lg cursor-pointer">
+          <section
+            onClick={() => navigate("/account/addresses/add-new-address")}
+            className="border-2 border-slate-300 border-dashed flex flex-col items-center justify-center w-72 md:h-72 py-3 rounded-lg cursor-pointer"
+          >
             <FaPlus className="text-gray-300 text-5xl" />
             <p className="text-gray-500 text-3xl font-semibold">Add Address</p>
           </section>
@@ -40,7 +43,7 @@ const AddressPage = (props) => {
             addresses.map((address, index) => (
               <section
                 key={index}
-                className="border-2 border-slate-300 flex flex-col justify-between w-80 h-80 rounded-lg p-4"
+                className="border-2 border-slate-300 flex flex-col justify-between w-72 h-72 rounded-lg p-4"
               >
                 <span>
                   <p className="text-md font-bold">{address.name}</p>

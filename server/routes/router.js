@@ -180,4 +180,30 @@ router.put("/account/profile/add-mobile", async (req, res) => {
   }
 });
 
+router.put("/account/addresses/add-new-address", async (req, res) => {
+  const { email, address } = req.body;
+
+  try {
+    console.log("Received request to add address for email:", email);
+    console.log("Address to add:", address);
+
+    const user = await schemas.Users.findOne({ email: email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).send("User not found");
+    }
+
+    console.log("adding new address");
+    // If product does not exist in cart, add new item
+    user.addresses.push(address);
+
+    await user.save();
+    console.log("address added successfully");
+    res.status(200).send(user);
+  } catch (error) {
+    console.error("An error occurred while adding the address:", error);
+    res.status(500).send("An error occurred while adding the address");
+  }
+});
+
 module.exports = router;
