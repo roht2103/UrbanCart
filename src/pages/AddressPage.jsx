@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 // const addr = [
 //   {
 //     country: "India",
@@ -15,17 +15,31 @@ import { Link, useNavigate } from "react-router-dom";
 //     zipCode: 422103,
 //   },
 // ];
-const AddressPage = (props) => {
+const AddressPage = () => {
   const [currUser, setCurrUser] = useState();
   const [addresses, setAddresses] = useState([]);
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (props.currentUser && props.currentUser.length > 0) {
-      setCurrUser(props.currentUser[0]);
-      setAddresses(props.currentUser[0].addresses);
+  // useEffect(() => {
+  //   if (props.currentUser && props.currentUser.length > 0) {
+  //     setCurrUser(props.currentUser[0]);
+  //     setAddresses(props.currentUser[0].addresses);
+  //   }
+  // }, [props.currentUser, addresses]);
+  const fetchUsers = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1000/user?email=${email}`
+      );
+      setCurrUser(response.data[0]);
+      setAddresses(response.data[0].addresses);
+    } catch (error) {
+      console.error("There was an error fetching the Users!", error);
     }
-  }, [props.currentUser]);
+  };
+  useEffect(() => {
+    isAuthenticated && fetchUsers(user.email);
+  }, [isLoading]);
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-2 md:p-4 w-full lg:w-4/6 md:w-5/6">

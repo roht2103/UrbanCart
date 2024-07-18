@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const AddAddress = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const address = {
@@ -25,7 +26,8 @@ const AddAddress = () => {
           address: address,
         }
       );
-      alert("Product added to cart");
+      alert("Address added successfully");
+      navigate("/account/address");
       console.log(response);
     } catch (error) {
       console.error(

@@ -60,10 +60,7 @@ function App() {
                     path="/account/wishlist"
                     element={<WishlistPage currentUser={currentUser} />}
                   />
-                  <Route
-                    path="/account/address"
-                    element={<AddressPage currentUser={currentUser} />}
-                  />
+                  <Route path="/account/address" element={<AddressPage />} />
                   <Route
                     path="/account/profile"
                     element={<ProfilePage currentUser={currentUser} />}
