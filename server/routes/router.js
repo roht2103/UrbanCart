@@ -64,6 +64,7 @@ router.post("/user", async (req, res) => {
     res.status(201).send("User data posted successfully");
   } catch (error) {
     res.status(500).send("There was an error posting the user data!");
+    console.log(error);
   }
 });
 
