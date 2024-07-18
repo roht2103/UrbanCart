@@ -5,12 +5,28 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Lottie from "lottie-react";
 import animation from "../assets/animations/loading.json";
 import { MdEdit } from "react-icons/md";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 const ProfilePage = (props) => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [editNameWindow, setEditNameWindow] = useState(false);
   const [editMobileWindow, setEditMobileWindow] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const fetchUsers = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1000/user?email=${email}`
+      );
+      setCurrentUser(response.data[0]);
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error fetching the Users!", error);
+    }
+  };
+  useEffect(() => {
+    isAuthenticated && fetchUsers(user.email);
+  }, [isLoading]);
 
   if (isLoading) {
     return (
@@ -20,8 +36,9 @@ const ProfilePage = (props) => {
     );
   }
 
-  const currentUser =
-    props.currentUser && props.currentUser[0] ? props.currentUser[0] : null;
+  // const currentUser =
+  //   props.currentUser && props.currentUser[0] ? props.currentUser[0] : null;
+  console.log(currentUser);
 
   return (
     <div className="flex flex-col items-center justify-center">

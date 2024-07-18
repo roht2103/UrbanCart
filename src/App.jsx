@@ -21,8 +21,8 @@ function App() {
       const response = await axios.get(
         `http://localhost:1000/user?email=${email}`
       );
-      setCurrentUser(response.data[0]);
-      console.log(response.data[0]);
+      setCurrentUser(response.data);
+      // console.log(response.data[0]);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }
