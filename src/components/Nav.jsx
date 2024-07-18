@@ -162,7 +162,9 @@ const Nav = (props) => {
             className="text-white cursor-pointer ml-1"
             onClick={() => navigate("/account/address")}
           >
-            <p className="text-xs font-light">Delivering to</p>
+            <p className="text-xs font-light">
+              Delivering to {!isLoading && isAuthenticated ? user.name : ""}
+            </p>
             <p className="text-sm">Update Address</p>
           </span>
         </section>
