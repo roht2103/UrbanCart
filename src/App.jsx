@@ -21,8 +21,8 @@ function App() {
       const response = await axios.get(
         `http://localhost:1000/user?email=${email}`
       );
-      setCurrentUser(response.data);
-      // console.log(response.data);
+      setCurrentUser(response.data[0]);
+      console.log(response.data[0]);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }
@@ -47,10 +47,7 @@ function App() {
             path="/*"
             element={
               <div className="">
-                <Nav
-                  currentUser={currentUser}
-                  cartCount={currentUser ? currentUser[0].cartItems.length : 0}
-                />
+                <Nav />
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/account" element={<AccountPage />} />

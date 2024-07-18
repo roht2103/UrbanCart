@@ -8,13 +8,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Popover } from "antd";
 
-const Nav = (props) => {
+const Nav = () => {
   const { loginWithRedirect, logout } = useAuth0();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
 
   const searchItem = (event) => {
     event.preventDefault();
@@ -59,7 +60,8 @@ const Nav = (props) => {
       const response = await axios.get(
         `http://localhost:1000/user?email=${email}`
       );
-      setCurrentUser(response.data);
+      setCurrentUser(response.data[0]);
+      setCartCount(response.data[0].cartItems.length);
       console.log(response.data);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
@@ -95,7 +97,7 @@ const Nav = (props) => {
       setIsUserLoading(false);
     }
   }, [isAuthenticated, user]);
-
+  // console.log(currentUser);
   const content = (
     <div>
       {!isAuthenticated && (
@@ -211,7 +213,7 @@ const Nav = (props) => {
         >
           <IoIosCart style={{ color: "white", fontSize: "30px" }} />
           <label className="text-white text-xl font-light cursor-pointer">
-            {props.cartCount}
+            {cartCount}
           </label>
         </span>
       </div>
