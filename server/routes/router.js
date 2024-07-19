@@ -244,6 +244,30 @@ router.delete("/account/addresses/remove-address", async (req, res) => {
       return addr._id.toString() === address._id;
     });
 
+    const areAddressesEqual = (address1, address2) => {
+      return (
+        address1.country === address2.country &&
+        address1.name === address2.name &&
+        address1.phoneNo === address2.phoneNo &&
+        address1.streetAddr === address2.streetAddr &&
+        address1.city === address2.city &&
+        address1.dist === address2.dist &&
+        address1.state === address2.state &&
+        address1.zipCode === address2.zipCode
+      );
+    };
+
+    if (areAddressesEqual(address, user.address)) {
+      console.log("Addresses are equal");
+      if (user.addresses.length > 1) {
+        user.address = user.addresses[0];
+      } else {
+        user.address = {};
+      }
+    } else {
+      console.log("Addresses are not equal");
+    }
+
     if (addressIndex > -1) {
       console.log("Address found in user, removing address");
       user.addresses.splice(addressIndex, 1); // Remove the address from the addresses array
