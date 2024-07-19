@@ -22,39 +22,6 @@ const Nav = () => {
     alert("searched");
   };
 
-  // const postUser = async (userData) => {
-  //   try {
-  //     const response = await axios.post("http://localhost:1000/user", userData);
-  //     console.log("User data posted successfully", response.data);
-  //   } catch (error) {
-  //     console.error("There was an error posting the user data!", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     if (isAuthenticated && user) {
-  //       const userData = {
-  //         name: user.name,
-  //         email: user.email,
-  //         img: user.picture,
-  //         cartItems: [],
-  //         wishlist: [],
-  //         orders: [],
-  //         addresses: [],
-  //         address: "",
-  //       };
-  //       postUser(userData);
-  //       setCurrentUser(userData);
-  //       setIsUserLoading(false);
-  //     } else {
-  //       setIsUserLoading(false);
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, [isAuthenticated, user]);
-
   const fetchUsers = async (email) => {
     try {
       const response = await axios.get(
@@ -77,8 +44,11 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    isAuthenticated && fetchUsers(user.email);
-  }, []);
+    if (isAuthenticated && user) {
+      fetchUsers(user.email);
+    }
+  }, [isAuthenticated, user]);
+
   useEffect(() => {
     if (isAuthenticated && user) {
       const userData = {
@@ -97,7 +67,7 @@ const Nav = () => {
       setIsUserLoading(false);
     }
   }, [isAuthenticated, user]);
-  // console.log(currentUser);
+
   const content = (
     <div>
       {!isAuthenticated && (
@@ -164,10 +134,21 @@ const Nav = () => {
             className="text-white cursor-pointer ml-1"
             onClick={() => navigate("/account/address")}
           >
-            <p className="text-xs font-light">
-              Delivering to {!isLoading && isAuthenticated ? user.name : ""}
-            </p>
-            <p className="text-sm">Update Address</p>
+            {currentUser && currentUser.address ? (
+              <>
+                <p className="text-xs font-light">
+                  Delivering to {currentUser.address.name}
+                </p>
+                <p className="text-sm">
+                  {`${currentUser.address.dist}, ${currentUser.address.zipCode}`}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-xs font-light">Delivering to</p>
+                <p className="text-sm">Update Address</p>
+              </>
+            )}
           </span>
         </section>
         <form
