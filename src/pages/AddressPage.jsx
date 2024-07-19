@@ -18,7 +18,7 @@ import axios from "axios";
 const AddressPage = () => {
   const [currUser, setCurrUser] = useState();
   const [addresses, setAddresses] = useState([]);
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
   // useEffect(() => {
   //   if (props.currentUser && props.currentUser.length > 0) {
@@ -63,7 +63,11 @@ const AddressPage = () => {
         <h1 className="text-2xl md:text-3xl my-5">Your Addresses</h1>
         <div className="flex flex-wrap gap-4 mt-4 justify-center md:justify-start">
           <section
-            onClick={() => navigate("/account/addresses/add-new-address")}
+            onClick={() =>
+              isAuthenticated
+                ? navigate("/account/addresses/add-new-address")
+                : loginWithRedirect()
+            }
             className="border-2 border-slate-300 border-dashed flex flex-col items-center justify-center w-72 md:h-72 py-3 rounded-lg cursor-pointer"
           >
             <FaPlus className="text-gray-300 text-5xl" />
