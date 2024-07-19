@@ -19,21 +19,21 @@ const AddAddress = () => {
     };
     console.log(address);
     try {
-      const response = await axios.put(
+      await axios.put(
         "http://localhost:1000/account/addresses/add-new-address",
         {
           email: user.email,
           address: address,
         }
       );
+      await axios.put("http://localhost:1000/account/addresses/set-address", {
+        email: user.email,
+        address: address,
+      });
       alert("Address added successfully");
       navigate("/account/address");
-      console.log(response);
     } catch (error) {
-      console.error(
-        "There was an error adding the product to the cart!",
-        error
-      );
+      console.error("There was an error adding the address!", error);
     }
   };
   return (

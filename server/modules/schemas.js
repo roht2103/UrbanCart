@@ -35,9 +35,9 @@ const userSchema = new Schema({
   ],
   addresses: [
     {
-      country: { type: String, required: true },
-      name: { type: String, required: true },
-      phoneNo: { type: Number, required: true },
+      country: { type: String },
+      name: { type: String },
+      phoneNo: { type: Number },
       streetAddr: { type: String },
       city: { type: String },
       dist: { type: String },
@@ -46,9 +46,9 @@ const userSchema = new Schema({
     },
   ],
   address: {
-    country: { type: String, required: true },
-    name: { type: String, required: true },
-    phoneNo: { type: Number, required: true },
+    country: { type: String },
+    name: { type: String },
+    phoneNo: { type: Number },
     streetAddr: { type: String },
     city: { type: String },
     dist: { type: String },
