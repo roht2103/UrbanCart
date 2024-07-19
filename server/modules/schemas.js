@@ -45,7 +45,16 @@ const userSchema = new Schema({
       zipCode: { type: Number },
     },
   ],
-  address: { type: String },
+  address: {
+    country: { type: String, required: true },
+    name: { type: String, required: true },
+    phoneNo: { type: Number, required: true },
+    streetAddr: { type: String },
+    city: { type: String },
+    dist: { type: String },
+    state: { type: String },
+    zipCode: { type: Number },
+  },
 });
 
 const productSchema = new Schema({
