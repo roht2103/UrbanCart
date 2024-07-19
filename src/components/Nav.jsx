@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Popover } from "antd";
+import { Popover } from "antd";
 
 const Nav = () => {
   const { loginWithRedirect, logout } = useAuth0();
@@ -16,6 +16,7 @@ const Nav = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
   const [cartCount, setCartCount] = useState(0);
+  const [navAddr, setNavAddr] = useState(null);
 
   const searchItem = (event) => {
     event.preventDefault();
@@ -27,8 +28,10 @@ const Nav = () => {
       const response = await axios.get(
         `http://localhost:1000/user?email=${email}`
       );
-      setCurrentUser(response.data[0]);
-      setCartCount(response.data[0].cartItems.length);
+      const userData = response.data[0];
+      setCurrentUser(userData);
+      setCartCount(userData.cartItems.length);
+      setNavAddr(userData.address);
       console.log(response.data);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
@@ -47,7 +50,7 @@ const Nav = () => {
     if (isAuthenticated && user) {
       fetchUsers(user.email);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, currentUser]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -134,13 +137,13 @@ const Nav = () => {
             className="text-white cursor-pointer ml-1"
             onClick={() => navigate("/account/address")}
           >
-            {currentUser && currentUser.address ? (
+            {navAddr ? (
               <>
                 <p className="text-xs font-light">
-                  Delivering to {currentUser.address.name}
+                  Delivering to {navAddr.name}
                 </p>
                 <p className="text-sm">
-                  {`${currentUser.address.dist}, ${currentUser.address.zipCode}`}
+                  {`${navAddr.dist}, ${navAddr.zipCode}`}
                 </p>
               </>
             ) : (
