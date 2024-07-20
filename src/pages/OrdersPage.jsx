@@ -99,25 +99,22 @@ const OrdersPage = (props) => {
             orderList.map((product) => (
               <div
                 key={product.id}
-                className="bg-gray-100 flex justify-between flex-wrap gap-5 mb-3 p-5"
+                className="bg-gray-100 flex justify-between flex-wrap gap-5 mb-3 p-5 cursor-pointer z-0"
+                onClick={() =>
+                  navigate("/account/orders/order-details", { state: product })
+                }
               >
                 <div className="flex flex-wrap gap-5">
                   <div className="flex-shrink-0">
                     <img
-                      src={`..\\${product.src}`} // Adjust path to correctly display image
-                      className="w-40 h-40 object-cover cursor-pointer"
+                      src={`..\\${product.src}`}
+                      className="w-40 h-40 object-cover"
                       alt={product.name}
-                      onClick={() => navigate("/product", { state: product })}
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col justify-between">
                     <div>
-                      <p
-                        className="text-2xl cursor-pointer font-semibold"
-                        onClick={() => navigate("/product", { state: product })}
-                      >
-                        {product.name}
-                      </p>
+                      <p className="text-2xl font-semibold">{product.name}</p>
                       <p className="text-gray-600 mt-2">
                         {product.description}
                       </p>
@@ -128,9 +125,6 @@ const OrdersPage = (props) => {
                     <div className="flex items-center mt-4">
                       <p className="text-lg font-bold">{product.price} $</p>
                     </div>
-                    <Link to="/buy" state={product}>
-                      Buy again
-                    </Link>
                   </div>
                 </div>
                 <div>
