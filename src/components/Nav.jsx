@@ -69,7 +69,7 @@ const UpdateAddressWindow = ({
                   isUpdating && "cursor-wait"
                 } ${
                   activeAddress && isSameAddress(address, activeAddress)
-                    ? "bg-cyan-50 border-4 border-cyan-800"
+                    ? "bg-cyan-50 border-4 border-cyan-900"
                     : ""
                 }`}
                 onClick={() =>
