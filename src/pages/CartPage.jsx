@@ -75,7 +75,7 @@ const CartPage = (props) => {
           </p>
           <hr className="mt-5" />
           {cartItems.map((product) => (
-            <div key={product.key} className="flex mt-5 p-5">
+            <div key={product.id} className="flex mt-5 p-5">
               <div className="flex-shrink-0">
                 <img
                   src={`..\\${product.src}`} // Adjust path to correctly display image
