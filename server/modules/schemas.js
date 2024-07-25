@@ -26,11 +26,19 @@ const userSchema = new Schema({
   ],
   orders: [
     {
-      productId: { type: String, required: true },
+      id: { type: Number, required: true },
       name: { type: String, required: true },
-      price: { type: Number, required: true },
+      price: { type: String, required: true },
+      orderDate: { type: Date, required: true },
+      orderConfirmDate: { type: Date, required: true },
+      deliveryDate: { type: Date, required: true },
+      orderId: { type: String, required: true },
+      src: { type: String, required: true },
       category: { type: String, required: true },
-      quantity: { type: Number, required: true, default: 1 },
+      gender: { type: String, required: true },
+      description: { type: String, required: true },
+      keywords: { type: Array },
+      address: { type: Object },
     },
   ],
   addresses: [
