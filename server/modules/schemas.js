@@ -18,10 +18,14 @@ const userSchema = new Schema({
   ],
   wishlist: [
     {
-      productId: { type: String, required: true },
+      id: { type: Number, required: true },
       name: { type: String, required: true },
-      price: { type: Number, required: true },
+      price: { type: String, required: true },
+      src: { type: String, required: true },
       category: { type: String, required: true },
+      gender: { type: String, required: true },
+      description: { type: String, required: true },
+      keywords: { type: Array },
     },
   ],
   orders: [
