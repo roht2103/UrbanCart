@@ -8,19 +8,28 @@ import animation from "../assets/animations/loading.json";
 
 const CartPage = (props) => {
   const [cartItems, setCartItems] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const { loginWithRedirect } = useAuth0();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
 
-  // Ensure currentUser is defined and has cartItems before setting state
-  useEffect(() => {
-    if (props.currentUser && props.currentUser.length > 0) {
-      setCartItems(props.currentUser[0].cartItems);
-      // console.log(props.currentUser);
+  const fetchUser = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1000/user?email=${email}`
+      );
+      setCurrentUser(response.data[0]);
+      setCartItems(response.data[0].cartItems);
+    } catch (error) {
+      console.error("There was an error fetching the Users!", error);
     }
-  }, [props.currentUser]);
-  // Calculate subtotal whenever cartItems change
+  };
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchUser(user.email);
+    }
+  }, [isAuthenticated, user, cartItems]);
   useEffect(() => {
     const total = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -32,7 +41,7 @@ const CartPage = (props) => {
   const updateQuantity = async (product, count) => {
     try {
       const response = await axios.put(
-        "http://localhost:4000/account/cart/quantity",
+        "http://localhost:1000/account/cart/quantity",
         {
           email: user.email,
           product: product,

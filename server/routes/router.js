@@ -143,7 +143,7 @@ router.put("/account/cart/quantity", async (req, res) => {
     }
 
     const productIndex = user.cartItems.findIndex(
-      (item) => item.productId === product.productId
+      (item) => item.id === product.id
     );
 
     if (productIndex > -1) {
