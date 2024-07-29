@@ -79,6 +79,16 @@ router.get("/user", async (req, res) => {
   }
 });
 
+router.get("/products", async (req, res) => {
+  try {
+    const products = await schemas.Products.find();
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("There was an error fetching the products!");
+  }
+});
+
 router.put("/account/cart/quantity", async (req, res) => {
   const { email, product, count } = req.body;
 

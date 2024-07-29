@@ -17,6 +17,7 @@ import axios from "axios";
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [currentUser, setCurrentUser] = useState(null);
+  const [products, setProducts] = useState([]);
   const fetchUser = async (email) => {
     try {
       const response = await axios.get(
@@ -29,6 +30,18 @@ function App() {
     }
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:1000/products");
+      setProducts(response.data);
+      // console.log(response.data[135]);
+    } catch (error) {
+      console.error("There was an error fetching the products!", error);
+    }
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   useEffect(() => {
     if (isAuthenticated && user) {
       fetchUser(user.email);
@@ -41,7 +54,7 @@ function App() {
   // }, [currentUser]);
 
   return (
-    <div>
+    <div className="bg-gray-100">
       <BrowserRouter>
         <Routes>
           <Route
@@ -50,7 +63,7 @@ function App() {
               <div className="">
                 <Nav />
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  <Route path="/" element={<HomePage products={products} />} />
                   <Route path="/account" element={<AccountPage />} />
                   <Route path="/account/orders" element={<OrdersPage />} />
                   <Route
