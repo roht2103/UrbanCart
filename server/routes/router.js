@@ -172,6 +172,43 @@ router.put("/account/cart/quantity", async (req, res) => {
   }
 });
 
+router.put("/user/wishlist", async (req, res) => {
+  const { email, product } = req.body;
+
+  try {
+    console.log("Received request to update wishlist for email:", email);
+    console.log("Product to add:", product);
+
+    const user = await schemas.Users.findOne({ email: email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).send("User not found");
+    }
+
+    const existingProductIndex = user.wishlist.findIndex(
+      (item) => item.id === product.id
+    );
+
+    if (existingProductIndex > -1) {
+      console.log("Product already in wishlist");
+      console.log("Removing Product from wishlist");
+      user.wishlist.splice(existingProductIndex, 1);
+      res.send("Product removed from wishlist");
+    } else {
+      console.log("Product not in wishlist, adding new item");
+      // If product does not exist in cart, add new item
+      user.wishlist.push(product);
+      res.send("Product added from wishlist");
+    }
+
+    await user.save();
+    console.log("Wishlist updated successfully");
+  } catch (error) {
+    console.error("An error occurred while updating the wishlist:", error);
+    res.status(500).send("An error occurred while updating the wishlist");
+  }
+});
+
 router.put("/account/profile/edit-name", async (req, res) => {
   const { email, name } = req.body;
 

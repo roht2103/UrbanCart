@@ -67,6 +67,21 @@ function App() {
       );
     }
   };
+  const updateWishlist = async (e, product) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.put("http://localhost:1000/user/wishlist", {
+        email: user.email,
+        product: product,
+      });
+      alert(response.data);
+    } catch (error) {
+      console.error(
+        "There was an error adding the product to the wishlist!",
+        error
+      );
+    }
+  };
   return (
     <div className="bg-gray-100">
       <BrowserRouter>
@@ -80,7 +95,11 @@ function App() {
                   <Route
                     path="/"
                     element={
-                      <HomePage products={products} addToCart={addToCart} />
+                      <HomePage
+                        products={products}
+                        addToCart={addToCart}
+                        updateWishlist={updateWishlist}
+                      />
                     }
                   />
                   <Route path="/account" element={<AccountPage />} />

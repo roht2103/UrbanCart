@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import ProductSwiper from "../components/ProductSwiper";
 
-const HomePage = ({ products, addToCart }) => {
+const HomePage = ({ products, addToCart, updateWishlist }) => {
   return (
     <div>
       <Header />
@@ -10,6 +10,7 @@ const HomePage = ({ products, addToCart }) => {
         products={products}
         keywords={["Shoes", "Footwear"]}
         addToCart={addToCart}
+        updateWishlist={updateWishlist}
       />
     </div>
   );

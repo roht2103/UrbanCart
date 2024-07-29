@@ -17,7 +17,13 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 
-const ProductSwiper = ({ heading, products, keywords, addToCart }) => {
+const ProductSwiper = ({
+  heading,
+  products,
+  keywords,
+  addToCart,
+  updateWishlist,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -50,7 +56,7 @@ const ProductSwiper = ({ heading, products, keywords, addToCart }) => {
                       />
                       <IoIosHeart
                         className="absolute text-white rounded-full p-2 right-5 top-20 text-5xl bg-[#eea83f96] z-50"
-                        onClick={(e) => addToWishlist(e, product)}
+                        onClick={(e) => updateWishlist(e, product)}
                       />
                       <img
                         alt={product.name}
