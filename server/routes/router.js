@@ -89,6 +89,43 @@ router.get("/products", async (req, res) => {
   }
 });
 
+router.put("/user/cart", async (req, res) => {
+  const { email, product } = req.body;
+
+  try {
+    console.log("Received request to update cart for email:", email);
+    console.log("Product to add:", product);
+
+    const user = await schemas.Users.findOne({ email: email });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).send("User not found");
+    }
+
+    const existingProductIndex = user.cartItems.findIndex(
+      (item) => item.id === product.id
+    );
+
+    if (existingProductIndex > -1) {
+      console.log("Product already in cart, updating quantity");
+      // If product already exists in cart, update quantity
+      user.cartItems[existingProductIndex].quantity += 1;
+      console.log(existingProductIndex);
+    } else {
+      console.log("Product not in cart, adding new item");
+      // If product does not exist in cart, add new item
+      user.cartItems.push(product);
+    }
+
+    await user.save();
+    console.log("Cart updated successfully");
+    res.status(200).send(user);
+  } catch (error) {
+    console.error("An error occurred while updating the cart:", error);
+    res.status(500).send("An error occurred while updating the cart");
+  }
+});
+
 router.put("/account/cart/quantity", async (req, res) => {
   const { email, product, count } = req.body;
 

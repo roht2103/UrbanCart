@@ -11,6 +11,7 @@ const userSchema = new Schema({
     {
       id: { type: Number, required: true },
       name: { type: String, required: true },
+      quantity: { type: Number, required: true, default: 1 },
       price: { type: String, required: true },
       src: { type: String, required: true },
       category: { type: String, required: true },

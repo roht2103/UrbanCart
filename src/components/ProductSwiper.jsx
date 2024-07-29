@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import { IoIosCart, IoIosHeart } from "react-icons/io";
 import {
   Navigation,
   Pagination,
@@ -16,7 +16,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
-const ProductSwiper = ({ heading, products, keywords }) => {
+
+const ProductSwiper = ({ heading, products, keywords, addToCart }) => {
   const navigate = useNavigate();
 
   return (
@@ -42,7 +43,15 @@ const ProductSwiper = ({ heading, products, keywords }) => {
                     className="group relative border border-2 rounded-md mb-6 p-2 cursor-pointer"
                     onClick={() => navigate("/product", { state: product })}
                   >
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
+                      <IoIosCart
+                        className="absolute text-white rounded-full p-2 right-5 top-5 text-5xl bg-[#eea83f96] z-50"
+                        onClick={(e) => addToCart(e, product)}
+                      />
+                      <IoIosHeart
+                        className="absolute text-white rounded-full p-2 right-5 top-20 text-5xl bg-[#eea83f96] z-50"
+                        onClick={(e) => addToWishlist(e, product)}
+                      />
                       <img
                         alt={product.name}
                         src={"..\\" + product.src}
@@ -71,4 +80,5 @@ const ProductSwiper = ({ heading, products, keywords }) => {
     </div>
   );
 };
+
 export default ProductSwiper;

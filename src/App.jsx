@@ -52,7 +52,21 @@ function App() {
   //     fetchUser(currentUser.email);
   //   }
   // }, [currentUser]);
-
+  const addToCart = async (e, product) => {
+    e.stopPropagation();
+    try {
+      const response = await axios.put("http://localhost:1000/user/cart", {
+        email: user.email,
+        product: product,
+      });
+      alert("Product added to cart");
+    } catch (error) {
+      console.error(
+        "There was an error adding the product to the cart!",
+        error
+      );
+    }
+  };
   return (
     <div className="bg-gray-100">
       <BrowserRouter>
@@ -63,7 +77,12 @@ function App() {
               <div className="">
                 <Nav />
                 <Routes>
-                  <Route path="/" element={<HomePage products={products} />} />
+                  <Route
+                    path="/"
+                    element={
+                      <HomePage products={products} addToCart={addToCart} />
+                    }
+                  />
                   <Route path="/account" element={<AccountPage />} />
                   <Route path="/account/orders" element={<OrdersPage />} />
                   <Route
