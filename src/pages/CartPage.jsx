@@ -88,7 +88,7 @@ const CartPage = (props) => {
               <div className="flex-shrink-0">
                 <img
                   src={`..\\${product.src}`} // Adjust path to correctly display image
-                  className="w-40 h-40 object-cover rounded-lg cursor-pointer"
+                  className="w-52 h-52 rounded-lg cursor-pointer"
                   alt={product.name}
                   onClick={() => navigate("/product")}
                 />
