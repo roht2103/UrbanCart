@@ -114,7 +114,7 @@ const EmptyWishlist = () => {
   );
 };
 
-const WishlistPage = () => {
+const WishlistPage = ({ updateWishlist }) => {
   const [wishlistItems, setWishlist] = useState([]);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
@@ -134,7 +134,7 @@ const WishlistPage = () => {
     if (isAuthenticated && user) {
       fetchUsers(user.email);
     }
-  }, [isAuthenticated, user, isLoading]);
+  }, [isAuthenticated, user, isLoading, wishlistItems]);
 
   return (
     <div className="bg-gray-100 p-5">
@@ -174,7 +174,7 @@ const WishlistPage = () => {
                 <div>
                   <MdDelete
                     className="text-gray-400 text-xl"
-                    onClick={() => alert("deleted")}
+                    onClick={(e) => updateWishlist(e, item)}
                   />
                 </div>
               </div>
