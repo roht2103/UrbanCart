@@ -26,14 +26,28 @@ const ProductSwiper = ({
   wishedItems,
 }) => {
   const navigate = useNavigate();
-  console.log(wishedItems);
+
   return (
     <div className="m-2 p-5 bg-white">
       <h1 className="text-2xl font-semibold mb-5">{heading}</h1>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={10}
-        slidesPerView={5}
+        slidesPerView={1}
+        breakpoints={{
+          420: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+        }}
         navigation
         autoplay
         scrollbar={{ draggable: true }}
@@ -46,6 +60,7 @@ const ProductSwiper = ({
               const isWished = wishedItems.some(
                 (item) => item.id === product.id
               );
+
               return (
                 <SwiperSlide key={product._id}>
                   <div
@@ -53,16 +68,26 @@ const ProductSwiper = ({
                     className="group relative border border-2 rounded-md mb-6 p-2 cursor-pointer"
                     onClick={() => navigate("/product", { state: product })}
                   >
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 h-64">
                       <IoIosCart
-                        className="absolute text-white rounded-full p-2 right-5 top-5 text-5xl bg-[#eea83f96] z-50"
-                        onClick={(e) => addToCart(e, product)}
+                        className={`absolute rounded-full p-1 md:p-2 right-2 md:right-5 top-2 md:top-5 text-3xl md:text-5xl bg-[#eea83f96] z-50 ${
+                          wishedItems.includes(product)
+                            ? "text-red-700"
+                            : "text-white"
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(product);
+                        }}
                       />
                       <IoIosHeart
-                        className={`absolute rounded-full p-2 right-5 top-20 text-5xl bg-[#eea83f96] z-50 ${
+                        className={`absolute rounded-full p-1 md:p-2 right-2 md:right-5 top-10 md:top-20 text-3xl md:text-5xl bg-[#eea83f96] z-50 ${
                           isWished ? "text-red-400" : "text-white"
                         }`}
-                        onClick={(e) => updateWishlist(e, product)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updateWishlist(product);
+                        }}
                       />
                       <img
                         alt={product.name}
