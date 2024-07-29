@@ -68,7 +68,7 @@ const ProductSwiper = ({
                     className="group relative border border-2 rounded-md mb-6 p-2 cursor-pointer"
                     onClick={() => navigate("/product", { state: product })}
                   >
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 h-64">
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 h-64">
                       <IoIosCart
                         className={`absolute rounded-full p-1 md:p-2 right-2 md:right-5 top-2 md:top-5 text-3xl md:text-5xl bg-[#eea83f96] z-50 ${
                           wishedItems.includes(product)

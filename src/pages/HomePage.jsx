@@ -4,15 +4,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const HomePage = ({ products, addToCart, updateWishlist }) => {
+const HomePage = ({ products, addToCart, updateWishlist, wishedItems }) => {
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const [wishedItems, setWishedItems] = useState([]);
   const fetchUser = async (email) => {
     try {
       const response = await axios.get(
         `http://localhost:1000/user?email=${email}`
       );
-      setWishedItems(response.data[0].wishlist);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }

@@ -18,6 +18,8 @@ function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [currentUser, setCurrentUser] = useState(null);
   const [products, setProducts] = useState([]);
+  const [wishedItems, setWishedItems] = useState([]);
+
   const fetchUser = async (email) => {
     try {
       const response = await axios.get(
@@ -25,6 +27,7 @@ function App() {
       );
       setCurrentUser(response.data);
       // console.log(response.data[0]);
+      setWishedItems(response.data[0].wishlist);
     } catch (error) {
       console.error("There was an error fetching the Users!", error);
     }
@@ -46,14 +49,13 @@ function App() {
     if (isAuthenticated && user) {
       fetchUser(user.email);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, wishedItems]);
   // useEffect(() => {
   //   if (currentUser) {
   //     fetchUser(currentUser.email);
   //   }
   // }, [currentUser]);
-  const addToCart = async (e, product) => {
-    e.stopPropagation();
+  const addToCart = async (product) => {
     try {
       const response = await axios.put("http://localhost:1000/user/cart", {
         email: user.email,
@@ -67,8 +69,7 @@ function App() {
       );
     }
   };
-  const updateWishlist = async (e, product) => {
-    e.stopPropagation();
+  const updateWishlist = async (product) => {
     try {
       const response = await axios.put("http://localhost:1000/user/wishlist", {
         email: user.email,
@@ -99,6 +100,7 @@ function App() {
                         products={products}
                         addToCart={addToCart}
                         updateWishlist={updateWishlist}
+                        wishedItems={wishedItems}
                       />
                     }
                   />
@@ -126,7 +128,16 @@ function App() {
                     path="/account/addresses/add-new-address"
                     element={<AddAddress currentUser={currentUser} />}
                   />
-                  <Route path="/product" element={<ProductPage />} />
+                  <Route
+                    path="/product"
+                    element={
+                      <ProductPage
+                        addToCart={addToCart}
+                        updateWishlist={updateWishlist}
+                        wishedItems={wishedItems}
+                      />
+                    }
+                  />
                   <Route
                     path="/account/orders/order-details"
                     element={<OrderDetailPage />}
