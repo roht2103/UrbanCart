@@ -23,9 +23,10 @@ const ProductSwiper = ({
   keywords,
   addToCart,
   updateWishlist,
+  wishedItems,
 }) => {
   const navigate = useNavigate();
-
+  console.log(wishedItems);
   return (
     <div className="m-2 p-5 bg-white">
       <h1 className="text-2xl font-semibold mb-5">{heading}</h1>
@@ -42,6 +43,9 @@ const ProductSwiper = ({
             if (
               keywords.some((keyword) => product.keywords.includes(keyword))
             ) {
+              const isWished = wishedItems.some(
+                (item) => item.id === product.id
+              );
               return (
                 <SwiperSlide key={product._id}>
                   <div
@@ -55,7 +59,9 @@ const ProductSwiper = ({
                         onClick={(e) => addToCart(e, product)}
                       />
                       <IoIosHeart
-                        className="absolute text-white rounded-full p-2 right-5 top-20 text-5xl bg-[#eea83f96] z-50"
+                        className={`absolute rounded-full p-2 right-5 top-20 text-5xl bg-[#eea83f96] z-50 ${
+                          isWished ? "text-red-400" : "text-white"
+                        }`}
                         onClick={(e) => updateWishlist(e, product)}
                       />
                       <img
