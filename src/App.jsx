@@ -135,6 +135,7 @@ function App() {
                         addToCart={addToCart}
                         updateWishlist={updateWishlist}
                         wishedItems={wishedItems}
+                        products={products}
                       />
                     }
                   />
