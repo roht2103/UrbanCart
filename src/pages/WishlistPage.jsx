@@ -174,7 +174,7 @@ const WishlistPage = ({ updateWishlist }) => {
                 <div>
                   <MdDelete
                     className="text-gray-400 text-xl"
-                    onClick={(e) => updateWishlist(e, item)}
+                    onClick={() => updateWishlist(item)}
                   />
                 </div>
               </div>

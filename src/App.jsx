@@ -14,6 +14,8 @@ import Footer from "./components/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [currentUser, setCurrentUser] = useState(null);
@@ -61,7 +63,7 @@ function App() {
         email: user.email,
         product: product,
       });
-      alert("Product added to cart");
+      toast("Product added to cart");
     } catch (error) {
       console.error(
         "There was an error adding the product to the cart!",
@@ -75,7 +77,7 @@ function App() {
         email: user.email,
         product: product,
       });
-      alert(response.data);
+      toast(response.data);
     } catch (error) {
       console.error(
         "There was an error adding the product to the wishlist!",
@@ -86,6 +88,7 @@ function App() {
   return (
     <div className="bg-gray-100">
       <BrowserRouter>
+        <ToastContainer />
         <Routes>
           <Route
             path="/*"
