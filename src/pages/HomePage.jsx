@@ -55,6 +55,14 @@ const HomePage = ({ products, addToCart, updateWishlist, wishedItems }) => {
         updateWishlist={updateWishlist}
         wishedItems={wishedItems}
       />
+      <ProductSwiper
+        heading={"Everyday Accessories"}
+        products={products}
+        keywords={["Sunglasses", "Accessories"]}
+        addToCart={addToCart}
+        updateWishlist={updateWishlist}
+        wishedItems={wishedItems}
+      />
     </div>
   );
 };

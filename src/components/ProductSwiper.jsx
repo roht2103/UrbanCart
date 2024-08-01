@@ -16,7 +16,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
-
+import { useState } from "react";
 const ProductSwiper = ({
   heading,
   products,
@@ -26,7 +26,7 @@ const ProductSwiper = ({
   wishedItems,
 }) => {
   const navigate = useNavigate();
-
+  const [hoveredProduct, setHoveredProduct] = useState(null);
   return (
     <div className="m-2 p-5 bg-white">
       <h1 className="text-2xl font-semibold mb-5">{heading}</h1>
@@ -66,6 +66,8 @@ const ProductSwiper = ({
                   <div
                     key={product.id}
                     className="group relative border border-2 rounded-md mb-6 p-2 cursor-pointer"
+                    onMouseEnter={() => setHoveredProduct(product.id)}
+                    onMouseLeave={() => setHoveredProduct(null)}
                     onClick={() => navigate("/product", { state: product })}
                   >
                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 h-64">
@@ -74,7 +76,11 @@ const ProductSwiper = ({
                           wishedItems.includes(product)
                             ? "text-red-700"
                             : "text-white"
-                        }`}
+                        } ${
+                          hoveredProduct === product.id
+                            ? "opacity-100"
+                            : "opacity-0"
+                        } transition-opacity duration-300`}
                         onClick={(e) => {
                           e.stopPropagation();
                           addToCart(product);
@@ -83,7 +89,11 @@ const ProductSwiper = ({
                       <IoIosHeart
                         className={`absolute rounded-full p-1 md:p-2 right-2 md:right-5 top-10 md:top-20 text-3xl md:text-5xl bg-[#eea83f96] z-50 ${
                           isWished ? "text-red-400" : "text-white"
-                        }`}
+                        } ${
+                          hoveredProduct === product.id
+                            ? "opacity-100"
+                            : "opacity-0"
+                        } transition-opacity duration-300`}
                         onClick={(e) => {
                           e.stopPropagation();
                           updateWishlist(product);
