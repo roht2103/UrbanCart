@@ -88,7 +88,7 @@ function App() {
   return (
     <div className="bg-gray-100">
       <BrowserRouter>
-        <ToastContainer />
+        <ToastContainer theme="dark" />
         <Routes>
           <Route
             path="/*"
