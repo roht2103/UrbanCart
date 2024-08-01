@@ -31,6 +31,30 @@ const HomePage = ({ products, addToCart, updateWishlist, wishedItems }) => {
         updateWishlist={updateWishlist}
         wishedItems={wishedItems}
       />
+      <ProductSwiper
+        heading={"Best Sellers in Cloths"}
+        products={products}
+        keywords={[
+          "Shirt",
+          "T-Shirt",
+          "Sweater",
+          "Hoodie",
+          "Denim",
+          "Jacket",
+          "Sleepwear",
+        ]}
+        addToCart={addToCart}
+        updateWishlist={updateWishlist}
+        wishedItems={wishedItems}
+      />
+      <ProductSwiper
+        heading={"Latest Tech-Wear for Coders"}
+        products={products}
+        keywords={["tech-wear"]}
+        addToCart={addToCart}
+        updateWishlist={updateWishlist}
+        wishedItems={wishedItems}
+      />
     </div>
   );
 };
