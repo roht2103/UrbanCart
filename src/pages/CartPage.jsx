@@ -90,7 +90,7 @@ const CartPage = (props) => {
                   src={`..\\${product.src}`} // Adjust path to correctly display image
                   className="w-52 h-52 rounded-lg cursor-pointer"
                   alt={product.name}
-                  onClick={() => navigate("/product")}
+                  onClick={() => navigate("/product", { state: product })}
                 />
               </div>
               <div className="ml-5 flex flex-col justify-between">
