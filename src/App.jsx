@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProductPage from "./pages/ProductPage";
 import AddAddress from "./pages/AddAddress";
 import OrderDetailPage from "./pages/OrderDetailPage";
+import Checkout from "./pages/Checkout";
 import Footer from "./components/Footer";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
@@ -151,6 +152,7 @@ function App() {
               </div>
             }
           />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -78,53 +78,86 @@ const CartPage = (props) => {
       ) : isAuthenticated && cartItems.length > 0 ? (
         <div className="bg-gray-100 m-5 px-3 py-7">
           <h1 className="text-3xl">Shopping Cart</h1>
-          <hr className="mt-5" />
-          <p className="text-xl">
-            Subtotal ({cartItems.length} items): <b>{subtotal} $</b>
-          </p>
-          <hr className="mt-5" />
-          {cartItems.map((product) => (
-            <div key={product.id} className="flex mt-5 p-5">
-              <div className="flex-shrink-0">
-                <img
-                  src={`..\\${product.src}`} // Adjust path to correctly display image
-                  className="w-52 h-52 rounded-lg cursor-pointer"
-                  alt={product.name}
-                  onClick={() => navigate("/product", { state: product })}
-                />
-              </div>
-              <div className="ml-5 flex flex-col justify-between">
-                <div>
-                  <p
-                    className="text-2xl cursor-pointer font-semibold"
-                    onClick={() => navigate("/product")}
-                  >
-                    {product.name}
-                  </p>
-                  <p className="text-gray-600 mt-2">{product.description}</p>
-                  <p className="text-gray-600">Category: {product.category}</p>
+          <hr className="my-5" />
+          <div className="flex justify-between flex-wrap">
+            <div>
+              {cartItems.map((product) => (
+                <div key={product.id} className="flex p-5">
+                  <div className="flex-shrink-0">
+                    <img
+                      src={`..\\${product.src}`} // Adjust path to correctly display image
+                      className="w-52 h-52 rounded-lg cursor-pointer"
+                      alt={product.name}
+                      onClick={() => navigate("/product", { state: product })}
+                    />
+                  </div>
+                  <div className="ml-5 flex flex-col justify-between">
+                    <div>
+                      <p
+                        className="text-2xl cursor-pointer font-semibold"
+                        onClick={() => navigate("/product")}
+                      >
+                        {product.name}
+                      </p>
+                      <p className="text-gray-600 mt-2">
+                        {product.description}
+                      </p>
+                      <p className="text-gray-600">
+                        Category: {product.category}
+                      </p>
+                    </div>
+                    <div className="text-xl">
+                      <button
+                        onClick={() => updateQuantity(product, -1)}
+                        className="w-6 rounded bg-gray-200 m-1"
+                      >
+                        -
+                      </button>
+                      <label className="w-6 m-1">{product.quantity}</label>
+                      <button
+                        onClick={() => updateQuantity(product, 1)}
+                        className="w-6 rounded bg-gray-200 m-1"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="flex items-center mt-4">
+                      <p className="text-lg font-bold">{product.price} $</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-xl">
-                  <button
-                    onClick={() => updateQuantity(product, -1)}
-                    className="w-6 rounded bg-gray-200 m-1"
-                  >
-                    -
-                  </button>
-                  <label className="w-6 m-1">{product.quantity}</label>
-                  <button
-                    onClick={() => updateQuantity(product, 1)}
-                    className="w-6 rounded bg-gray-200 m-1"
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="flex items-center mt-4">
-                  <p className="text-lg font-bold">{product.price} $</p>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+            <div className="bg-white h-fit p-5 shadow-2xl">
+              <p className="text-2xl font-semibold">
+                Subtotal ({cartItems.length} Items) :
+              </p>
+              <hr className="my-3" />
+              <section>
+                <span className="flex justify-between mb-1">
+                  <p>Total MRP</p>
+                  <p>{subtotal} $</p>
+                </span>
+                <span className="flex justify-between">
+                  <p>Delivery Charges</p>
+                  <p>4 $</p>
+                </span>
+                <hr className="my-3" />
+                <span className="flex justify-between font-semibold mb-2">
+                  <p>Total Amount</p>
+                  <p>{subtotal + 4} $</p>
+                </span>
+                <button
+                  className="w-full bg-[#FFBD59] text-white p-1 text-xl"
+                  onClick={() =>
+                    navigate("/checkout", { state: [cartItems, currentUser] })
+                  }
+                >
+                  Checkout
+                </button>
+              </section>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="bg-gray-100 m-5 px-3 py-10">
