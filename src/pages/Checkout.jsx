@@ -95,10 +95,10 @@ const Checkout = () => {
             </section>
           ) : (
             <section className="flex justify-between items-start">
-              <span className="flex gap-8 font-bold text-xl">
-                <p>1</p>
-                <p>Shipping address</p>
-              </span>
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <span className="text-cyan-700">1</span>
+                <span>Shipping address</span>
+              </h2>
               <span>
                 <p>{deliveryAddress.name}</p>
                 <p>
@@ -121,87 +121,96 @@ const Checkout = () => {
             </section>
           )}
           <hr className="my-4" />
-          <div className="flex flex-col justify-between items-start">
-            <section className="flex gap-8 font-bold text-xl mb-3">
-              <p>2</p>
-              <p>Price Details</p>
-            </section>
-            <section className="w-full">
-              <table className="w-full  text-lg font-bold">
-                <thead>
-                  <tr className="border-t-2 border-gray-300">
-                    <th className=" px-4 py-2 text-left"></th>
-                    <th className=" px-4 py-2 text-left">Name</th>
-                    <th className=" px-4 py-2 text-left">Price</th>
-                    <th className=" px-4 py-2 text-left">Quantity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr
-                      key={product.id}
-                      className="border-y-2 border-gray-300 font-normal"
-                    >
-                      <td className=" px-4 py-2">
-                        <img
-                          src={product.src}
-                          className="h-28"
-                          alt={product.name}
-                        />
-                      </td>
-                      <td className=" px-4 py-2">{product.name}</td>
-                      <td className=" px-4 py-2">{product.price} ₹</td>
-                      <td className=" px-4 py-2">{product.quantity}</td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td></td>
-                    <td className="font-semibold px-4 py-2">Total MRP</td>
-                    <td className="font-normal px-4 py-2">{subtotal} ₹</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td className="font-semibold px-4 py-2">
-                      Delivery Charges
+          <section className="w-full bg-gray-50 p-4">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <span className="text-cyan-700">2</span>
+              <span>Price Details</span>
+            </h2>
+            <table className="w-full text-sm md:text-lg">
+              <thead>
+                <tr className="border-b border-gray-300">
+                  <th className="px-4 py-2 text-left font-semibold">Product</th>
+                  <th className="px-4 py-2 text-left font-semibold">Price</th>
+                  <th className="px-4 py-2 text-left font-semibold">
+                    Quantity
+                  </th>
+                  <th className="px-4 py-2 text-left font-semibold">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product.id} className="border-b border-gray-200">
+                    <td className="px-4 py-2 flex flex-wrap items-center gap-2">
+                      <img
+                        src={product.src}
+                        className="h-16 w-16 object-cover rounded"
+                        alt={product.name}
+                      />
+                      <span>{product.name}</span>
                     </td>
-                    <td className="font-normal px-4 py-2">4 ₹</td>
+                    <td className="px-4 py-2 text-gray-700">
+                      {product.price} ₹
+                    </td>
+                    <td className="px-4 py-2 text-gray-700">
+                      {product.quantity}
+                    </td>
+                    <td className="px-4 py-2 text-gray-700">
+                      {product.price * product.quantity} ₹
+                    </td>
                   </tr>
-                  <tr>
-                    <td></td>
-                    <td className="font-semibold px-4 py-2">Total</td>
-                    <td className="font-normal px-4 py-2">{subtotal + 4} ₹</td>
-                  </tr>
-                </tbody>
-              </table>
-              <hr className="my-4" />
-            </section>
-          </div>
-          <section className="flex flex-col gap-3 justify-between items-start">
-            <span className="flex gap-8 font-bold text-xl">
-              <p>3</p>
-              <p>Payment Method</p>
-            </span>
-            <span className="flex flex-col ml-5 gap-2">
-              <label className="flex gap-2">
-                <input
-                  onChange={() => setPaymentMethod("cashOnDelivery")}
-                  type="radio"
-                  name="paymentethod"
-                  value="Cash on delivery"
-                />
-                Cash on delivery
-              </label>
-              <label className="flex gap-2">
-                <input
-                  onChange={() => setPaymentMethod("cards")}
-                  type="radio"
-                  name="paymentethod"
-                  value="Card"
-                />
-                Card
-              </label>
-            </span>
+                ))}
+                <tr className="font-semibold">
+                  <td className="px-4 py-2" colSpan="3">
+                    Total MRP
+                  </td>
+                  <td className="px-4 py-2">{subtotal} ₹</td>
+                </tr>
+                <tr className="font-semibold">
+                  <td className="px-4 py-2" colSpan="3">
+                    Delivery Charges
+                  </td>
+                  <td className="px-4 py-2">4 ₹</td>
+                </tr>
+                <tr className="font-semibold text-lg">
+                  <td className="px-4 py-2" colSpan="3">
+                    Total
+                  </td>
+                  <td className="px-4 py-2">{subtotal + 4} ₹</td>
+                </tr>
+              </tbody>
+            </table>
           </section>
+
+          <section className="w-full bg-gray-50 p-4 mt-6">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <span className="text-cyan-700">3</span>
+              <span>Payment Method</span>
+            </h2>
+            <div className="flex flex-col gap-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cashOnDelivery"
+                  onChange={() => setPaymentMethod("cashOnDelivery")}
+                  className="form-radio text-cyan-700"
+                />
+                <span className="text-gray-800">Cash on Delivery</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cards"
+                  onChange={() => setPaymentMethod("cards")}
+                  className="form-radio text-cyan-700"
+                />
+                <span className="text-gray-800">Card</span>
+              </label>
+              {/* Add more payment options here if needed */}
+            </div>
+          </section>
+
           <section className="flex w-full justify-center">
             <button
               className="bg-[#FFBD59] text-black py-1 px-10 rounded-full text-md"
