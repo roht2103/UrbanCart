@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const schemas = require("../modules/schemas");
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 router.get("/", (req, res) => {
   res.send("Hello, World!");
@@ -365,6 +366,37 @@ router.delete("/account/addresses/remove-address", async (req, res) => {
   } catch (error) {
     console.error("An error occurred while removing the address:", error);
     res.status(500).send("An error occurred while removing the address");
+  }
+});
+
+router.post("/create-checkout-session", async (req, res) => {
+  try {
+    const { products } = req.body; // Make sure you are receiving the products array from req.body
+
+    // Map your products to Stripe's required format for line_items
+    const lineItems = products.map((product) => ({
+      price_data: {
+        currency: "inr", // Set your currency
+        product_data: {
+          name: product.name,
+        },
+        unit_amount: product.price * 100, // Stripe expects the amount in cents/paise
+      },
+      quantity: product.quantity,
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+      // Correct usage of stripe object
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: lineItems,
+      success_url: "http://localhost:5173/success", // Adjust to your actual success URL
+      cancel_url: "http://localhost:5173/cancel", // Adjust to your actual cancel URL
+    });
+
+    res.json({ url: session.url }); // Return the session's URL to the client
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

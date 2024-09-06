@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv/config");
 const router = require("./routes/router");
 const app = express();
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 // Middleware
 app.use(bodyParser.json());

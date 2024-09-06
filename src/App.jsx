@@ -12,6 +12,8 @@ import AddAddress from "./pages/AddAddress";
 import OrderDetailPage from "./pages/OrderDetailPage";
 import Checkout from "./pages/Checkout";
 import Footer from "./components/Footer";
+import SuccessPage from "./pages/SuccessPage";
+import CancelPage from "./pages/CancelPage";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -153,6 +155,8 @@ function App() {
             }
           />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/cancel" element={<CancelPage />} />
         </Routes>
       </BrowserRouter>
     </div>

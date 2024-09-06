@@ -148,12 +148,14 @@ const CartPage = (props) => {
                   <p>{subtotal + 4} $</p>
                 </span>
                 <button
-                  className="w-full bg-[#FFBD59] text-white p-1 text-xl"
+                  className="w-full bg-[#FFBD59] text-black py-1 px-10 rounded-full text-md"
                   onClick={() =>
-                    navigate("/checkout", { state: [cartItems, currentUser] })
+                    navigate("/checkout", {
+                      state: [cartItems, subtotal, currentUser],
+                    })
                   }
                 >
-                  Checkout
+                  Proceed to checkout
                 </button>
               </section>
             </div>
