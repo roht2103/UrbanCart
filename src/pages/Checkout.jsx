@@ -3,6 +3,8 @@ import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Checkout = () => {
   const location = useLocation();
   const products = location.state[0];
@@ -13,10 +15,32 @@ const Checkout = () => {
   const [showChangeAddress, setShowChangeAddress] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const navigate = useNavigate();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
+  const updateCartAndOrders = async (orderProducts) => {
+    await axios.post("http://localhost:1000/add-to-orders", {
+      email: user.email,
+      products: orderProducts, // Pass the enhanced products array
+    });
+
+    await axios.post("http://localhost:1000/empty-cart", {
+      email: user.email,
+    });
+  };
   const checkout = async () => {
+    const orderProducts = products.map((product) => ({
+      ...product,
+      deliveryAddress,
+      paymentMethod,
+    }));
     if (paymentMethod === "cashOnDelivery") {
-      navigate("/success");
+      try {
+        updateCartAndOrders(orderProducts);
+        navigate("/success");
+      } catch (error) {
+        console.error("Order processing error:", error);
+        toast.error("Failed to process order");
+      }
     } else {
       try {
         const res = await axios.post(

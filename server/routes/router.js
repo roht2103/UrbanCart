@@ -127,6 +127,35 @@ router.put("/user/cart", async (req, res) => {
   }
 });
 
+router.post("/add-to-orders", async (req, res) => {
+  const { email, products } = req.body;
+
+  try {
+    const user = await schemas.Users.findOne({ email: email });
+
+    user.orders.push(...products); // Flattening the products array to match orders schema
+    await user.save();
+
+    res.status(200).json({ message: "Order placed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to place order" });
+  }
+});
+
+router.post("/empty-cart", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await schemas.Users.findOne({ email: email });
+
+    user.cartItems.splice(0, user.cartItems.length); // Flattening the products array to match orders schema
+    await user.save();
+
+    res.status(200).json({ message: "cart empty successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to empty cart" });
+  }
+});
+
 router.put("/account/cart/quantity", async (req, res) => {
   const { email, product, count } = req.body;
 
